@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml"
+                        layout="absolute"
+                        xmlns:ns1="net.moocowstudio.modelaircraft.view.*"
+                        width="900"
+                        creationComplete="onCreationComplete(event)"
+                        height="600">
+
+    <mx:Style source="assets/css/classic.css" />
+    <mx:ApplicationControlBar x="10"
+                              y="10"
+                              width="820"
+                              height="41"
+                              horizontalCenter="0">
+        <mx:ButtonBar dataProvider="viewStack">
+        </mx:ButtonBar>
+        <mx:Button label="Button"
+                   click="this.onClick_btnInstallDatabase(event)" />
+        <mx:Spacer width="100%" />
+        <mx:TextInput />
+        <mx:Button icon="@Embed(source='assets/images/icon_magnifier.png')"
+                   width="20" />
+    </mx:ApplicationControlBar>
+    <mx:ViewStack id="viewStack"
+                  x="10"
+                  y="59"
+                  width="820"
+                  horizontalCenter="0"
+                  height="520">
+        <mx:Canvas id="canvasThumbnails"
+                   label="Grid View"
+                   x="10"
+                   y="59"
+                   width="820"
+                   horizontalCenter="0"
+                   dropShadowEnabled="true"
+                   height="520"
+                   backgroundColor="#FFFFFF">
+        </mx:Canvas>
+
+        <mx:Canvas id="canvasListView"
+                   label="List View"
+                   x="10"
+                   y="59"
+                   width="820"
+                   horizontalCenter="0"
+                   dropShadowEnabled="true"
+                   height="520"
+                   backgroundColor="#FFFFFF">
+
+            <mx:DataGrid id="dgItems"
+                         right="10"
+                         left="10"
+                         top="10"
+                         bottom="311"
+                         dataProvider="{this.allMyAircraft}">
+                <mx:columns>
+                    <mx:DataGridColumn headerText="Name"
+                                       dataField="name" />
+                    <mx:DataGridColumn headerText="Type"
+                                       dataField="type" />
+                    <mx:DataGridColumn headerText="Wing Span"
+                                       dataField="wingSpan" />
+                    <mx:DataGridColumn headerText="Year"
+                                       dataField="year" />
+                    <mx:DataGridColumn headerText="Designer"
+                                       dataField="designer" />
+                    <mx:DataGridColumn headerText="Publication"
+                                       dataField="publication" />
+                </mx:columns>
+            </mx:DataGrid>
+            <mx:Canvas x="10"
+                       y="215"
+                       width="798">
+                <mx:Image x="502"
+                          y="42"
+                          source="assets/images/Berkeley Brigadier.jpg"
+                          height="128"
+                          width="128" />
+                <mx:Image x="502"
+                          y="141"
+                          height="128"
+                          width="128"
+                          source="assets/images/Cloud Cruiser.jpg" />
+                <mx:Image x="658"
+                          y="42"
+                          height="128"
+                          width="128"
+                          source="assets/images/Tomboy 36.JPG" />
+                <mx:Label x="177.5"
+                          y="10"
+                          text=""
+                          fontSize="15"
+                          horizontalCenter="0" />
+                <mx:Label y="77"
+                          text="Year:"
+                          fontSize="13"
+                          x="71" />
+                <mx:Label y="141"
+                          text="Publication:"
+                          fontSize="13"
+                          x="30" />
+                <mx:Label y="42"
+                          text="Type:"
+                          fontSize="13"
+                          x="68" />
+                <mx:Label y="42"
+                          text=""
+                          fontSize="13"
+                          width="355"
+                          x="120" />
+                <mx:Label y="109"
+                          text=""
+                          fontSize="13"
+                          width="355"
+                          x="118" />
+                <mx:Label y="77"
+                          text=""
+                          fontSize="13"
+                          width="355"
+                          x="120" />
+                <mx:Label y="141"
+                          text=""
+                          fontSize="13"
+                          width="355"
+                          x="120" />
+                <mx:Label y="109"
+                          text="Wing Span:"
+                          fontSize="13"
+                          x="31" />
+            </mx:Canvas>
+        </mx:Canvas>
+        <ns1:Maintenance visible="true"
+                         label="Maintenance">
+
+        </ns1:Maintenance>
+    </mx:ViewStack>
+
+    <mx:Script>
+        <![CDATA[
+            import mx.utils.Base64Encoder;
+            import net.moocowstudio.modelaircraft.database.Helper;
+            import mx.controls.Image;
+            import net.moocowstudio.modelaircraft.database.DatabaseFacade;
+            import net.moocowstudio.modelaircraft.database.Database;
+            import mx.effects.Fade;
+            import net.moocowstudio.modelaircraft.Aircraft;
+            import net.moocowstudio.modelaircraft.view.AircraftCatalogItem;
+            import mx.events.EffectEvent;
+            import mx.effects.Resize;
+            import mx.effects.Move;
+            import mx.effects.Glow;
+            import mx.effects.Sequence;
+            import net.moocowstudio.modelaircraft.view.AircraftCatalogThumbnail;
+            private var allMyThumbnails : Array = new Array();
+            [Bindable] private var allMyAircraft : Array = new Array();
+
+
+            public function onCreationComplete(event : Event) : void {
+
+                this.aircraftCatalogItem = new AircraftCatalogItem();
+                this.aircraftCatalogItem.aircraft = new Aircraft();
+                this.allMyAircraft.push(new Aircraft());
+
+                this.aircraftCatalogItem.x = 10;
+                this.aircraftCatalogItem.y = 10;
+                this.aircraftCatalogItem.visible = false;
+                this.canvasThumbnails.addChild(this.aircraftCatalogItem);
+
+                this.allMyAircraft = DatabaseFacade.getInstance().getAllAircraft();
+
+                var x : int = 10;
+                var y : int = 10;
+                var columns : int = 3;
+                var rows : int = 0;
+                var xPadding : int = 10;
+                var yPadding : int = 10;
+                for (var i : int = 0; i < this.allMyAircraft.length; i++) {
+                    //Have you met our column constraint?
+                    if (i % columns == 0 && i != 0) {
+                        rows++;
+                        y += yPadding + thumbnail.height;
+                        //Reset the x position;
+                        x = xPadding;
+                    }
+                    var thumbnail : AircraftCatalogThumbnail = new AircraftCatalogThumbnail();
+                    thumbnail.x = x;
+                    thumbnail.y = y;
+                    thumbnail.aircraft = this.allMyAircraft[i];
+                    //thumbnail.addEventListener(MouseEvent.MOUSE_OVER, this.onMouseOver);
+                    //thumbnail.addEventListener(MouseEvent.MOUSE_OUT, this.onMouseOut);
+                    thumbnail.addEventListener(MouseEvent.CLICK, this.onMouseClick);
+                    this.canvasThumbnails.addChild(thumbnail);
+                    x += thumbnail.width + xPadding;
+                    this.allMyThumbnails.push(thumbnail);
+                }
+
+            }
+
+            private function layoutInGrid() : void {
+                if (this.aircraftCatalogItem.visible == false) {
+                    return;
+                }
+                try {
+                    this.aircraftCatalogItem.visible = false;
+                } catch (e : *) {
+                    trace(e);
+                }
+
+                var x : int = 10;
+                var y : int = 10;
+                var columns : int = 3;
+                var rows : int = 0;
+                var xPadding : int = 10;
+                var yPadding : int = 10;
+                var i : int = 0;
+                for each (var thumbnail : AircraftCatalogThumbnail in this.allMyThumbnails) {
+                    //Have you met our column constraint?
+                    if (i % columns == 0 && i != 0) {
+                        rows++;
+                        y += yPadding + thumbnail.height;
+                        //Reset the x position;
+                        x = xPadding;
+                    }
+                    var move : Move = new Move();
+                    move.xFrom = thumbnail.x;
+                    move.xTo = x;
+                    move.yFrom = thumbnail.y;
+                    move.yTo = y;
+                    move.duration = 500;
+                    move.play([thumbnail]);
+
+                    thumbnail.addEventListener(MouseEvent.CLICK, this.onMouseClick);
+                    x += thumbnail.width + xPadding;
+                    i++;
+                }
+            }
+
+            [Bindable] private var selectedThumbnail : AircraftCatalogThumbnail;
+            [Bindable] private var aircraftCatalogItem : AircraftCatalogItem;
+
+            private function onMouseClick(event : MouseEvent) : void {
+                this.animateThumbnailsOffStage();
+                this.selectedThumbnail = event.currentTarget as AircraftCatalogThumbnail;
+                this.aircraftCatalogItem.aircraft = this.selectedThumbnail.aircraft;
+                this.aircraftCatalogItem.visible = true;
+                var fadein : Fade = new Fade();
+                fadein.alphaFrom = 0.0;
+                fadein.alphaTo = 1.00;
+                fadein.duration = 1000;
+                fadein.play([this.aircraftCatalogItem]);
+            }
+
+            private function onMouseOver(event : MouseEvent) : void {
+                var sequence : Sequence = new Sequence();
+                var glow : Glow = new Glow();
+                glow.color = 0x3F4C6B;
+                glow.strength = 6;
+                glow.duration = (1 / 3) * 500;
+
+                glow.alphaFrom = 0;
+                glow.alphaTo = 1;
+
+                glow.blurXFrom = 0;
+                glow.blurXTo = 6;
+
+                glow.blurYFrom = 0;
+                glow.blurYTo = 6;
+
+                sequence.addChild(glow);
+                sequence.play([event.currentTarget]);
+            }
+
+            private function onMouseOut(event : MouseEvent) : void {
+                var sequence : Sequence = new Sequence();
+                var glow : Glow = new Glow();
+                glow.strength = 6;
+                glow.duration = (1 / 3) * 500;
+                glow.color = 0x3F4C6B;
+
+                glow.alphaFrom = 1;
+                glow.alphaTo = 0;
+
+                glow.blurXFrom = 6;
+                glow.blurXTo = 0;
+
+                glow.blurYFrom = 6;
+                glow.blurYTo = 0;
+
+                sequence.addChild(glow);
+                sequence.play([event.currentTarget]);
+            }
+
+
+
+            private function animateThumbnailsOffStage() : void {
+                if (this.aircraftCatalogItem.visible) {
+                    return;
+                }
+//Move each thumnail to the far right and stack them in
+                //a single column.
+                var xPadding : int = 10;
+                var yPadding : int = 10;
+                var x : int;
+                var y : int = yPadding;
+                var maxColumns : int = 1;
+                var counter : int = 0;
+
+                var originalWidth : Number = 255;
+                var originalHeight : Number = 114;
+                for each (var thumbnail : AircraftCatalogThumbnail in this.allMyThumbnails) {
+
+                    var sequence : Sequence = new Sequence();
+
+                    x = this.canvasThumbnails.width - 3 * xPadding - thumbnail.width;
+
+                    var moveResizeSequence : Sequence = new Sequence();
+//Create the animated move.
+                    var move : Move = new Move();
+                    move.xFrom = thumbnail.x;
+                    move.xTo = x;
+                    move.yFrom = thumbnail.y;
+                    move.yTo = y;
+                    move.duration = 500;
+                    moveResizeSequence.addChild(move);
+                    sequence.addChild(moveResizeSequence);
+
+                    //Check if we have met our column contraint.
+                    if (counter % maxColumns == 0) {
+                        y += yPadding + thumbnail.height;
+                    }
+                    /*if (this.selectedThumbnail == thumbnail) {
+                       var moveResizeSequence : Sequence = new Sequence();
+                       //The thumbnail that was clicked on gets special attention.
+                       var move : Move = new Move();
+                       move.xFrom = thumbnail.x;
+                       move.xTo = xPadding;
+                       move.yFrom = thumbnail.y;
+                       move.yTo = yPadding;
+                       move.duration = 500;
+                       moveResizeSequence.addChild(move);
+                       sequence.addChild(moveResizeSequence);
+
+                     }*/
+                    counter++;
+
+                    sequence.play([thumbnail]);
+                }
+            }
+
+            public function onMouseClick_btnGrid(event) : void {
+                this.layoutInGrid();
+            }
+
+            public function onMouseClick_btnListView(event) : void {
+                dgItems.dataProvider = this.allMyAircraft;
+            }
+
+            public function onClick_btnInstallDatabase(event : Event) : void {
+                var database : Database = new Database();
+                database.createAircraftDatabase();
+            }
+        ]]>
+    </mx:Script>
+    <mx:Image x="9"
+              y="58"
+              id="myImage"
+              source="assets/images/Cloud Cruiser.jpg"
+              visible="false" />
+
+</mx:WindowedApplication>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AircraftCatalogItemsListViewClass xmlns="net.moocowstudio.modelaircraft.view.codebehind.*"
+                                   xmlns:mx="http://www.adobe.com/2006/mxml"
+                                   width="525"
+                                   height="300">
+</AircraftCatalogItemsListViewClass>

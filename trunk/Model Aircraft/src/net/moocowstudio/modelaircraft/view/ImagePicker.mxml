@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml"
+           width="150"
+           height="158"
+           creationComplete=""
+           borderColor="#333333"
+           cornerRadius="8"
+           borderStyle="solid">
+    <mx:Metadata>
+		[DefaultProperty("componentChildren")]
+		[Event(name="select", type="flash.events.Event")]
+	</mx:Metadata>
+    <mx:Script>
+        <![CDATA[
+            import mx.graphics.codec.PNGEncoder;
+            import mx.controls.Image;
+
+            private var _selectLabel : String = "Select";
+            private var _children : Array = [];
+            [Bindable] private var _selectedItem : Image = new Image();
+            public var imageAsByteArray : ByteArray;
+
+            [Bindable] public function set selectLabel(text : String) : void {
+                _selectLabel = text;
+            }
+
+            public function get selectLabel() : String {
+                return _selectLabel;
+            }
+
+            public function get selectedItem() : Image {
+                return _selectedItem;
+            }
+
+            public function set componentChildren(arr : Array) : void {
+                if (arr) {
+                    arr.reverse();
+                    _children = arr;
+                }
+            }
+
+            private function selected() : void {
+                if (_selectedItem) {
+                    dispatchEvent(new Event(Event.SELECT));
+                }
+            }
+
+            private function selectPicture() : void {
+// This little section here creates a file object, and then launches the file browser so that you can select your image
+                var file : File = File.documentsDirectory;
+                file.addEventListener(Event.SELECT, handleSelectPicture);
+                file.browseForOpen("Select Picture");
+            }
+
+            private function handleSelectPicture(event : Event) : void {
+// Once the image file has been selected, we now have to load it
+                var loader : Loader = new Loader();
+                loader.contentLoaderInfo.addEventListener(Event.COMPLETE, handleLoadPicture);
+                loader.load(new URLRequest(event.target.url));
+            }
+
+            private function handleLoadPicture(event : Event) : void {
+// The first thing that we do is create a Loader object (which is a subclass od DisplayObject)
+                var loader : Loader = Loader(event.target.loader);
+// Next, we cast the loader as a Bitmpa object, as the Bitmap object has function to return a BitmapData object based on the image
+                var image : Bitmap = Bitmap(loader.content);
+                var encoder : PNGEncoder = new PNGEncoder();
+// The PNGEncoder allows you to convert BitmapData object into a ByteArray, ready for storage in an SQLite blob field
+                var byteArray : ByteArray = encoder.encode(image.bitmapData);
+                this.imageAsByteArray = byteArray;
+                //var statement:SQLStatement = SQLConnectionWrapper.instance.setPicture(1, byteArray);
+                // statement.execute(-1, responder);
+                this._selectedItem.source = byteArray;
+            }
+        ]]>
+    </mx:Script>
+    <mx:Canvas id="preview"
+               top="10"
+               left="10"
+               right="10"
+               bottom="40"
+               backgroundColor="#ffffff">
+        <mx:Image x="10"
+                  y="10"
+                  width="198"
+                  height="172"
+                  source="{this._selectedItem}"
+                  top="10"
+                  left="10"
+                  right="10"
+                  bottom="10" />
+    </mx:Canvas>
+    <mx:Button x="10"
+               y="212"
+               label="Browse..."
+               click="selectPicture()"
+               bottom="10" />
+</mx:Canvas>

@@ -1,0 +1,99 @@
+/* CSS file */
+Application{
+            backgroundColor: #F5F5F5;    
+            /*background-image: Embed("../assets/images/background.jpg");*/
+            
+}
+        .mypanelTitle {
+                fontSize: 12;
+                font-family: verdana;
+                text-align: center;
+                color:#FFFFFF;
+        }
+        
+        /*ScrollBar {
+            up-arrow-up-skin:Embed("../assets/images/scrollbar/scrollbar_arrow_up_up.png");
+            up-arrow-over-skin: Embed("../assets/images/scrollbar/scrollbar_arrow_up_over.png");
+            up-arrow-down-skin: Embed("../assets/images/scrollbar/scrollbar_arrow_up_over.png");
+            
+            down-arrow-up-skin:Embed("../assets/images/scrollbar/scrollbar_arrow_down_up.png");
+            down-arrow-down-skin: Embed("../assets/images/scrollbar/scrollbar_arrow_down_over.png");
+            down-arrow-over-skin: Embed("../assets/images/scrollbar/scrollbar_arrow_down_over.png");
+            
+            track-skin: Embed("../assets/images/scrollbar/scrollbar_track.png",scaleGridTop="24", scaleGridBottom="331", scaleGridLeft="7", scaleGridRight="8");
+            thumb-up-skin: Embed("../assets/images/scrollbar/scrollbar_thumb_up.png",scaleGridTop="8", scaleGridBottom="106", scaleGridLeft="6", scaleGridRight="7");
+            thumb-down-skin: Embed("../assets/images/scrollbar/scrollbar_thumb_up.png",scaleGridTop="8", scaleGridBottom="106", scaleGridLeft="6", scaleGridRight="7");
+            thumb-over-skin: Embed("../assets/images/scrollbar/scrollbar_thumb_up.png",scaleGridTop="8", scaleGridBottom="106", scaleGridLeft="6", scaleGridRight="7");
+        }*/
+        UXWindow
+        {
+            backgroundColor: #f9f7f7;
+            borderAlpha: 1;
+            borderColor: #3F4C6B;
+            footerColors: #3F4C6B, #3F4C6B;
+            headerColors: #3F4C6B, #3F4C6B;
+            headerHeight: 20;
+            borderThickness: 0;
+            borderThicknessLeft: 0;
+            borderThicknessTop: 0;
+            borderThicknessBottom: 0;
+            borderThicknessRight: 0;
+            titleStyleName: "mypanelTitle";
+            disabled-color: #7A7A7A;
+            rounded-bottom-corners: false;            
+        }
+
+        ToggleButtonBar
+        {
+            button-style-name: "buttons";
+        }
+        
+        Button{
+            fill-alphas: 1.0, 1.0;
+            button-width: 70;
+        }
+        
+        TabBar{
+            fill-alphas: 1.0, 1.0;
+        }
+            
+
+        ControlBar{
+            padding-bottom: 10;
+            padding-left: 12;
+            padding-right: 12;
+            padding-top: 5;
+        }
+        
+        TextInput{
+          corner-radius: 5;
+          border-style: solid;
+          padding-left:2;
+          padding-top:2;
+        }
+        
+        Canvas {
+            border-style: solid;
+            corner-radius: 5;
+            background-color: #f9f7f7;
+        }
+        
+        Label {
+            font-family: Verdana;
+            /*font-size: 12;*/
+        }
+        
+        .EmphasizedLabel {
+            font-family: Verdana;
+            font-size: 13;
+            font-weight: bold;
+        }
+        
+        LinkButton{
+            color: #0000cc;
+        }
+        
+        MenuBar{
+            font-family:Verdana;
+            font-size:12;
+        }
