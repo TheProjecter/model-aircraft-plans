@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AddAircraftBase xmlns="net.moocowstudio.modelaircraft.view.codebehind.*"
+                 xmlns:mx="http://www.adobe.com/2006/mxml"
+                 width="525"
+                 height="482"
+                 creationComplete="onCreationComplete(event)"
+                 xmlns:ns1="net.moocowstudio.modelaircraft.view.*">
+    <mx:Form y="10"
+             width="278"
+             bottom="10"
+             left="10"
+             right="10"
+             top="10">
+        <mx:FormHeading label="New Aircraft" />
+        <mx:FormItem label="Name">
+            <mx:TextInput id="txtName" />
+        </mx:FormItem>
+        <mx:FormItem label="Type">
+            <mx:ComboBox id="comboBoxType"
+                         dataProvider="{comboBoxTypeData}"
+                         labelFunction="this.onLabelFunction_comboBoxTypes">
+            </mx:ComboBox>
+        </mx:FormItem>
+        <mx:FormItem label="Designer">
+            <mx:ComboBox id="comboBoxDesigner"
+                         dataProvider="{this.comboboxDesignerData}"
+                         labelFunction="this.onLabelFunction_comboBoxDesigner">
+            </mx:ComboBox>
+        </mx:FormItem>
+        <mx:FormItem label="Publication">
+            <mx:ComboBox id="comboBoxPublication"
+                         dataProvider="{this.comboBoxPublicationData}"
+                         labelFunction="this.onLabelFunction_comboBoxPublication">
+            </mx:ComboBox>
+        </mx:FormItem>
+        <mx:FormItem label="Wingspan">
+            <mx:TextInput id="txtWingspan" />
+        </mx:FormItem>
+        <mx:FormItem label="Year">
+            <mx:TextInput id="txtYear" />
+        </mx:FormItem>
+        <mx:Button label="+"
+                   click="{this.onClick_btnAdd(event)}" />
+        <ns1:ImagePicker id="imagePicker">
+            <mx:Image source="assets/images/Smoothie-MS0001.jpg" />
+        </ns1:ImagePicker>
+    </mx:Form>
+</AddAircraftBase>

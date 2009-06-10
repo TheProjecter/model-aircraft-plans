@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AddDesignerClass xmlns="net.moocowstudio.modelaircraft.view.codebehind.*"
+                  xmlns:mx="http://www.adobe.com/2006/mxml"
+                  height="300"
+                  width="525"
+                  creationComplete="onCreationComplete(event)">
+    <mx:Form x="10"
+             y="10"
+             width="282"
+             horizontalCenter="0">
+        <mx:FormHeading label="New Designer" />
+        <mx:FormItem label="First Name">
+            <mx:TextInput id="txtFirstName" />
+        </mx:FormItem>
+        <mx:FormItem label="Last Name">
+            <mx:TextInput id="txtLastName" />
+        </mx:FormItem>
+        <mx:Button label="+"
+                   id="btnAdd"
+                   click="onClick_btnAdd(event)" />
+    </mx:Form>
+
+</AddDesignerClass>

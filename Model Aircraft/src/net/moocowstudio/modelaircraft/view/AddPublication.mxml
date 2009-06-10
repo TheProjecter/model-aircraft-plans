@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AddPublicationClass xmlns="net.moocowstudio.modelaircraft.view.codebehind.*"
+                     xmlns:mx="http://www.adobe.com/2006/mxml"
+                     width="525"
+                     height="300">
+    <mx:Form x="10"
+             y="10"
+             width="330"
+             horizontalCenter="0">
+        <mx:FormHeading label="Add Publication" />
+        <mx:FormItem label="Publication Title">
+            <mx:TextInput id="txtTitle" />
+        </mx:FormItem>
+        <mx:Button label="+"
+                   click="onClick_btnAdd(event)" />
+    </mx:Form>
+</AddPublicationClass>
