@@ -31,8 +31,7 @@
 
 
             public function onCreationComplete(event : Event) : void {
-                this.listAircraft_query.execute();
-
+                this.queryListAircraft.execute();
             }
 
             public function init() : void {
@@ -254,7 +253,7 @@
             }
 
             public function onResult_listAircraft_query() : void {
-                var result : Array = this.listAircraft_query.data;
+                var result : Array = this.queryListAircraft.data;
                 this.allMyAircraft = new Array();
                 for each (var object : Object in result) {
                     var o : Aircraft = new Aircraft();
@@ -268,6 +267,23 @@
                     o.image = Helper.base64ToByteArray(object.image);
                     this.allMyAircraft.push(o);
                 }
+            }
+
+            public function setupDatabase() : void {
+                /* Create tables */
+                this.queryCreateAircraftTable.execute();
+                this.queryCreateAircraftTypeTable.execute();
+                this.queryCreateDesignerTable.execute();
+                this.queryCreatePublicationTable.execute();
+                this.queryCreateCounterTable.execute();
+
+            /* Initialize the counter table */ /*this.queryInitCounterTableForAircraftId.execute();
+               this.queryInitCounterTableForAircraftTypeId.execute();
+               this.queryInitCounterTableForDesignerId.execute();
+             this.queryInitCounterTableForPublicationId.execute();*/
+
+
+
             }
         ]]>
     </mx:Script>
@@ -291,8 +307,8 @@
                                   height="41"
                                   left="10"
                                   right="10">
-            <mx:ButtonBar dataProvider="viewStack">
-            </mx:ButtonBar>
+            <mx:ToggleButtonBar dataProvider="viewStack">
+            </mx:ToggleButtonBar>
             <mx:Spacer width="100%" />
             <mx:TextInput id="txtSearch" />
             <mx:Button icon="@Embed(source='assets/images/icon_magnifier.png')"
@@ -407,15 +423,43 @@
                               x="31" />
                 </mx:Canvas>
             </mx:Canvas>
-            <ns1:Maintenance />
+            <ns1:Maintenance label="Owner" />
         </mx:ViewStack>
     </mx:Canvas>
     <sql:SQLite id="aircraft_db"
-                file="aircraft.db" />
-    <sql:Query id="listAircraft_query"
+                file="aircraft.db"
+                open="setupDatabase()" />
+    <sql:Query id="queryListAircraft"
                connection="{aircraft_db.connection}"
                sql="SELECT * FROM aircraft"
                result="onResult_listAircraft_query()" />
+    <sql:Query id="queryCreateAircraftTable"
+               connection="{aircraft_db.connection}"
+               sql="CREATE TABLE IF NOT EXISTS aircraft(aircraft_id integer not null,name text,publication_id int,designer_id int,aircraft_type_id int,year text,wingspan integer,image BLOB,primary key(aircraft_id));" />
+    <sql:Query id="queryCreatePublicationTable"
+               connection="{aircraft_db.connection}"
+               sql="CREATE TABLE IF NOT EXISTS publication(publication_id integer not null,title text,primary key(publication_id));" />
+    <sql:Query id="queryCreateAircraftTypeTable"
+               connection="{aircraft_db.connection}"
+               sql="CREATE TABLE IF NOT EXISTS aircraft_type(type_id integer not null,title text,primary key(type_id));" />
+    <sql:Query id="queryCreateDesignerTable"
+               connection="{aircraft_db.connection}"
+               sql="CREATE TABLE IF NOT EXISTS designer(designer_id integer not null,first_name text, last_name text,primary key(designer_id));" />
+    <sql:Query id="queryCreateCounterTable"
+               connection="{aircraft_db.connection}"
+               sql="CREATE TABLE IF NOT EXISTS counter(counter_id integer not null, count integer, primary key(counter_id));" />
 
-
+    <!-- Set up the Counter Tables -->
+    <sql:Query id="queryInitCounterTableForAircraftId"
+               connection="{aircraft_db.connection}"
+               sql="INSERT INTO counter VALUES(1,1);" />
+    <sql:Query id="queryInitCounterTableForPublicationId"
+               connection="{aircraft_db.connection}"
+               sql="INSERT INTO counter VALUES(2,1);" />
+    <sql:Query id="queryInitCounterTableForAircraftTypeId"
+               connection="{aircraft_db.connection}"
+               sql="INSERT INTO counter VALUES(3,1);" />
+    <sql:Query id="queryInitCounterTableForDesignerId"
+               connection="{aircraft_db.connection}"
+               sql="INSERT INTO counter VALUES(4,1);" />
 </mx:WindowedApplication>

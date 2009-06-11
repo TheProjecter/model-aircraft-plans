@@ -79,7 +79,8 @@
                left="10"
                right="10"
                bottom="40"
-               backgroundColor="#ffffff">
+               backgroundColor="#ffffff"
+               dropShadowEnabled="true">
         <mx:Image x="10"
                   y="10"
                   width="198"

@@ -13,7 +13,7 @@ package net.moocowstudio.modelaircraft.view.codebehind {
         /* Properties */
         public var viewStack : ViewStack;
         public var viewAddAircraft : AddAircraft;
-        public var addAircraft_query : Query;
+        public var queryAddAircraft : Query;
 
 
         public function MaintenanceClass() {
@@ -36,7 +36,8 @@ package net.moocowstudio.modelaircraft.view.codebehind {
 
         public function onAddAircraft() : void {
             var id : int = DatabaseFacade.getInstance().database.getCountFor(1);
-            this.addAircraft_query.parameters = [
+            var imageAsBase64String : String = Helper.byteArrayToBase64(this.viewAddAircraft.imagePicker.imageAsByteArray);
+            this.queryAddAircraft.parameters = [
                 id,
                 this.viewAddAircraft.txtName.text,
                 this.viewAddAircraft.comboBoxPublication.selectedItem.id,
@@ -44,9 +45,9 @@ package net.moocowstudio.modelaircraft.view.codebehind {
                 this.viewAddAircraft.comboBoxType.selectedItem.id,
                 this.viewAddAircraft.txtYear.text,
                 int(new Number(this.viewAddAircraft.txtWingspan.text)),
-                Helper.byteArrayToBase64(this.viewAddAircraft.imagePicker.imageAsByteArray)
+                imageAsBase64String
                 ]
-            this.addAircraft_query.execute();
+            this.queryAddAircraft.execute();
         }
 
     }
