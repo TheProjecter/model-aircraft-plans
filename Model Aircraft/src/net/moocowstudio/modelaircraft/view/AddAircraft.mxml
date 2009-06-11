@@ -5,6 +5,9 @@
                  height="482"
                  creationComplete="onCreationComplete(event)"
                  xmlns:ns1="net.moocowstudio.modelaircraft.view.*">
+    <mx:Metadata>
+        [Event(name="save", type="flash.events.Event")]
+    </mx:Metadata>
     <mx:Form y="10"
              width="278"
              bottom="10"
@@ -40,7 +43,7 @@
             <mx:TextInput id="txtYear" />
         </mx:FormItem>
         <mx:Button label="+"
-                   click="{this.onClick_btnAdd(event)}" />
+                   click="dispatchEvent(new Event('save'))" />
         <ns1:ImagePicker id="imagePicker">
             <mx:Image source="assets/images/Smoothie-MS0001.jpg" />
         </ns1:ImagePicker>

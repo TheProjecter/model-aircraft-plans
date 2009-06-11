@@ -1,6 +1,7 @@
 package net.moocowstudio.modelaircraft.database {
     import flash.data.SQLConnection;
     import flash.data.SQLStatement;
+    import flash.events.Event;
     import flash.utils.ByteArray;
 
     import mx.collections.ArrayCollection;
@@ -253,12 +254,14 @@ package net.moocowstudio.modelaircraft.database {
             return collection;
         }
 
-        public function getAllAircraft() : Array {
-            var sql : String = "select * from aircraft";
+
+
+        public function getAllAircraftWhereNameIsLike(name : String) : Array {
+            var sql : String = "select * from aircraft where name like '" + name + "%'";
             /* Set the sql statement string.
              * Pon el SQL declaracion.*/
             sqlStatement.text = sql;
-
+            trace(sql);
             /* Execute the sql statement.
              * Finaliza el SQL declaracion.*/
             this.sqlStatement.execute();
@@ -274,7 +277,6 @@ package net.moocowstudio.modelaircraft.database {
                 o.wingSpan = object.wingspan;
                 o.year = object.year;
                 o.image = Helper.base64ToByteArray(object.image);
-
                 collection.push(o);
             }
             return collection;
@@ -315,7 +317,7 @@ package net.moocowstudio.modelaircraft.database {
         }
 
 
-        private function getCountFor(key : int) : int {
+        public function getCountFor(key : int) : int {
             var sql : String = "select * from counter where counter_id = " + key;
 
             /* Set the sql statement string.

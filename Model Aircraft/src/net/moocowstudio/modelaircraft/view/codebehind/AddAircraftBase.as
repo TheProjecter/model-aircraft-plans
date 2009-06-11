@@ -41,6 +41,12 @@ package net.moocowstudio.modelaircraft.view.codebehind {
             this.comboBoxPublicationData = database.getAllPublications();
         }
 
+        public function clearFormFields() : void {
+            this.txtName.text = "";
+            this.txtWingspan.text = "";
+            this.txtYear.text = "";
+        }
+
         /* Event Handlers */
         public function onCreationComplete(event : Event) : void {
             this.loadDataProviders();
@@ -61,17 +67,17 @@ package net.moocowstudio.modelaircraft.view.codebehind {
             return text;
         }
 
-        public function onClick_btnAdd(event : MouseEvent) : void {
-            var facade : DatabaseFacade = DatabaseFacade.getInstance();
-            var aircraft : Aircraft = new Aircraft();
-            aircraft.designerId = this.comboBoxDesigner.selectedItem.id;
-            aircraft.name = this.txtName.text;
-            aircraft.publicationId = this.comboBoxPublication.selectedItem.id;
-            aircraft.typeId = this.comboBoxType.selectedItem.id;
-            aircraft.wingSpan = new Number(this.txtWingspan.text);
-            aircraft.year = this.txtYear.text;
-            aircraft.image = this.imagePicker.imageAsByteArray;
-            facade.add(aircraft);
-        }
+    /*public function onClick_btnAdd(event : MouseEvent) : void {
+       var facade : DatabaseFacade = DatabaseFacade.getInstance();
+       var aircraft : Aircraft = new Aircraft();
+       aircraft.designerId = this.comboBoxDesigner.selectedItem.id;
+       aircraft.name = this.txtName.text;
+       aircraft.publicationId = this.comboBoxPublication.selectedItem.id;
+       aircraft.typeId = this.comboBoxType.selectedItem.id;
+       aircraft.wingSpan = new Number(this.txtWingspan.text);
+       aircraft.year = this.txtYear.text;
+       aircraft.image = this.imagePicker.imageAsByteArray;
+       facade.add(aircraft);
+     }*/
     }
 }

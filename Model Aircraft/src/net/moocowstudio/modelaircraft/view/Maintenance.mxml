@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <MaintenanceClass xmlns="net.moocowstudio.modelaircraft.view.codebehind.*"
+                  xmlns:sql="net.moocowstudio.modelaircraft.database.sqlite.*"
                   xmlns:mx="http://www.adobe.com/2006/mxml"
                   width="100%"
                   height="100%"
@@ -11,7 +12,8 @@
         <view:AddAircraft id="viewAddAircraft"
                           label="New Aircraft"
                           height="100%"
-                          width="100%" />
+                          width="100%"
+                          save="onAddAircraft()" />
         <view:AddDesigner label="New Designer"
                           height="100%"
                           width="100%" />
@@ -33,4 +35,12 @@
                         horizontalCenter="0"
                         itemClick="onItemClick_viewStack(event)">
     </mx:ToggleButtonBar>
+
+    <sql:SQLite id="aircraft_db"
+                file="aircraft.db" />
+    <sql:Query id="addAircraft_query"
+               connection="{aircraft_db.connection}"
+               sql="INSERT INTO aircraft VALUES (@ID, @NAME, @PUBLICATION_ID, @DESIGNER_ID, @AIRCRAFT_TYPE_ID, @YEAR, @WINGSPAN, @IMAGE)"
+               result="clearFormFields(); /*listContacts_query.execute()*/" />
+
 </MaintenanceClass>
