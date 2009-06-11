@@ -8,12 +8,15 @@
     <mx:Metadata>
         [Event(name="save", type="flash.events.Event")]
     </mx:Metadata>
-    <mx:Form y="10"
-             width="278"
-             bottom="10"
+    <mx:Form bottom="243"
              left="10"
-             right="10"
-             top="10">
+             right="172"
+             top="10"
+             borderStyle="solid"
+             dropShadowEnabled="true"
+             cornerRadius="5"
+             borderColor="#FFFFFF"
+             horizontalCenter="0">
         <mx:FormHeading label="New Aircraft" />
         <mx:FormItem label="Name">
             <mx:TextInput id="txtName" />
@@ -42,10 +45,13 @@
         <mx:FormItem label="Year">
             <mx:TextInput id="txtYear" />
         </mx:FormItem>
-        <mx:Button label="+"
-                   click="dispatchEvent(new Event('save'))" />
-        <ns1:ImagePicker id="imagePicker">
+        <ns1:ImagePicker id="imagePicker"
+                         borderStyle="solid"
+                         borderColor="#FFFFFF"
+                         dropShadowEnabled="true">
             <mx:Image source="assets/images/Smoothie-MS0001.jpg" />
         </ns1:ImagePicker>
+        <mx:Button label="Add Aircraft"
+                   click="dispatchEvent(new Event('save'))" />
     </mx:Form>
 </AddAircraftBase>

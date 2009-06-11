@@ -139,7 +139,7 @@ package net.moocowstudio.modelaircraft.database {
             this.sqlStatement.execute();
 //Type
             sql = "create table" +
-                "    type(" +
+                "    aircraft_type(" +
                 "       type_id integer not null," +
                 "       title text," +
                 "       primary key(type_id));";
@@ -202,7 +202,7 @@ package net.moocowstudio.modelaircraft.database {
 
         public function addType(
             title : String) : void {
-            var sql : String = "insert into type values(" +
+            var sql : String = "insert into aircraft_type values(" +
                 this.getCountFor(this.kCOUNTER_KEY_TYPE) + ",'" +
                 title + "')";
             /* Set the sql statement string.
@@ -235,7 +235,7 @@ package net.moocowstudio.modelaircraft.database {
         }
 
         public function getAllAircraftTypes() : ArrayCollection {
-            var sql : String = "select * from type";
+            var sql : String = "select * from aircraft_type";
             /* Set the sql statement string.
              * Pon el SQL declaracion.*/
             sqlStatement.text = sql;
@@ -369,7 +369,7 @@ package net.moocowstudio.modelaircraft.database {
             /* Execute the sql statement.
              * Finaliza el SQL declaracion.*/
             this.sqlStatement.execute();
-            sql = "insert into counter values(2,1);";
+            sql = "INSERT INTO counter VALUES(2,1);";
             /* Set the sql statement string.
              * Pon el SQL declaracion.*/
             this.sqlStatement.text = sql;

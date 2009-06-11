@@ -1,6 +1,6 @@
 /* CSS file */
 WindowedApplication {
-   backgroundImage: Embed(source="assets/images/backgrounds.swf#redstripe");
+   backgroundImage: Embed(source="assets/images/backgrounds.swf#bluestripe");
 }
         .mypanelTitle {
                 fontSize: 12;
@@ -54,7 +54,6 @@ ToolTip {
 }
         
         ButtonBar {
-   buttonWidth: 80;
    horizontalGap: 0;
    textIndent: 0;
    letterSpacing: 0;
@@ -69,7 +68,12 @@ ToolTip {
    borderColor: #999999;
    themeColor: #666666;
 }
-
+Form{
+    border-color:#FFFFFF;
+    border-style:solid;
+    drop-shadow-enabled:true;
+    corner-radius:5;
+}
 .mybuttonBarFirstButtonStyle {
    cornerRadius: 6;
 }
