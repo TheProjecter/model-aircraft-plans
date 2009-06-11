@@ -7,7 +7,7 @@ package net.moocowstudio.modelaircraft.database {
     import net.moocowstudio.modelaircraft.model.Publication;
 
     public class DatabaseFacade {
-        private var database : Database = new Database();
+        public var database : Database = new Database();
         private static var _instance : DatabaseFacade = null;
 
         public static function getInstance() : DatabaseFacade {
@@ -85,35 +85,39 @@ package net.moocowstudio.modelaircraft.database {
             return object;
         }
 
-        public function getAllAircraft() : Array {
-            var results : Array = this.database.getAllAircraft();
-            for each (var aircraft : Aircraft in results) {
-                try {
-                    var object : Object = this.valuesForKey(
-                        "publication_id",
-                        aircraft.publicationId,
-                        "publication");
-                    var title : String = object.title;
-                    aircraft.publication = title;
-
-                    object = this.valuesForKey(
-                        "designer_id",
-                        aircraft.designerId,
-                        "designer");
-                    var designer : String = object.first_name + " " + object.last_name;
-                    aircraft.designer = designer;
-
-                    object = this.valuesForKey(
-                        "type_id",
-                        aircraft.typeId,
-                        "type");
-                    var aircraftType : String = object.title;
-                    aircraft.type = aircraftType;
-                } catch (e : *) {
-                    trace(e);
-                }
+        public function getAllAircraftWhereNameIsLike(name : String) : Array {
+            var collection : Array = this.database.getAllAircraftWhereNameIsLike(name);
+            for each (var aircraft : Aircraft in collection) {
+                this.resolveValuesForIds(aircraft);
             }
-            return results;
+            return collection;
+        }
+
+        public function resolveValuesForIds(aircraft : Aircraft) : void {
+            try {
+                var object : Object = this.valuesForKey(
+                    "publication_id",
+                    aircraft.publicationId,
+                    "publication");
+                var title : String = object.title;
+                aircraft.publication = title;
+
+                object = this.valuesForKey(
+                    "designer_id",
+                    aircraft.designerId,
+                    "designer");
+                var designer : String = object.first_name + " " + object.last_name;
+                aircraft.designer = designer;
+
+                object = this.valuesForKey(
+                    "type_id",
+                    aircraft.typeId,
+                    "type");
+                var aircraftType : String = object.title;
+                aircraft.type = aircraftType;
+            } catch (e : *) {
+                trace(e);
+            }
         }
     }
 }

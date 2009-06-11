@@ -1,8 +1,6 @@
 /* CSS file */
-Application{
-            backgroundColor: #F5F5F5;    
-            /*background-image: Embed("../assets/images/background.jpg");*/
-            
+WindowedApplication {
+   backgroundImage: Embed(source="assets/images/backgrounds.swf#redstripe");
 }
         .mypanelTitle {
                 fontSize: 12;
@@ -11,47 +9,74 @@ Application{
                 color:#FFFFFF;
         }
         
-        /*ScrollBar {
-            up-arrow-up-skin:Embed("../assets/images/scrollbar/scrollbar_arrow_up_up.png");
-            up-arrow-over-skin: Embed("../assets/images/scrollbar/scrollbar_arrow_up_over.png");
-            up-arrow-down-skin: Embed("../assets/images/scrollbar/scrollbar_arrow_up_over.png");
+        ScrollBar {
+            up-arrow-up-skin:Embed("assets/images/scrollbar/scrollbar_arrow_up_up.png");
+            up-arrow-over-skin: Embed("assets/images/scrollbar/scrollbar_arrow_up_over.png");
+            up-arrow-down-skin: Embed("assets/images/scrollbar/scrollbar_arrow_up_over.png");
             
-            down-arrow-up-skin:Embed("../assets/images/scrollbar/scrollbar_arrow_down_up.png");
-            down-arrow-down-skin: Embed("../assets/images/scrollbar/scrollbar_arrow_down_over.png");
-            down-arrow-over-skin: Embed("../assets/images/scrollbar/scrollbar_arrow_down_over.png");
+            down-arrow-up-skin:Embed("assets/images/scrollbar/scrollbar_arrow_down_up.png");
+            down-arrow-down-skin: Embed("assets/images/scrollbar/scrollbar_arrow_down_over.png");
+            down-arrow-over-skin: Embed("assets/images/scrollbar/scrollbar_arrow_down_over.png");
             
-            track-skin: Embed("../assets/images/scrollbar/scrollbar_track.png",scaleGridTop="24", scaleGridBottom="331", scaleGridLeft="7", scaleGridRight="8");
-            thumb-up-skin: Embed("../assets/images/scrollbar/scrollbar_thumb_up.png",scaleGridTop="8", scaleGridBottom="106", scaleGridLeft="6", scaleGridRight="7");
-            thumb-down-skin: Embed("../assets/images/scrollbar/scrollbar_thumb_up.png",scaleGridTop="8", scaleGridBottom="106", scaleGridLeft="6", scaleGridRight="7");
-            thumb-over-skin: Embed("../assets/images/scrollbar/scrollbar_thumb_up.png",scaleGridTop="8", scaleGridBottom="106", scaleGridLeft="6", scaleGridRight="7");
-        }*/
-        UXWindow
-        {
-            backgroundColor: #f9f7f7;
-            borderAlpha: 1;
-            borderColor: #3F4C6B;
-            footerColors: #3F4C6B, #3F4C6B;
-            headerColors: #3F4C6B, #3F4C6B;
-            headerHeight: 20;
-            borderThickness: 0;
-            borderThicknessLeft: 0;
-            borderThicknessTop: 0;
-            borderThicknessBottom: 0;
-            borderThicknessRight: 0;
-            titleStyleName: "mypanelTitle";
-            disabled-color: #7A7A7A;
-            rounded-bottom-corners: false;            
-        }
-
-        ToggleButtonBar
-        {
-            button-style-name: "buttons";
+            track-skin: Embed("assets/images/scrollbar/scrollbar_track.png",scaleGridTop="24", scaleGridBottom="331", scaleGridLeft="7", scaleGridRight="8");
+            thumb-up-skin: Embed("assets/images/scrollbar/scrollbar_thumb_up.png",scaleGridTop="8", scaleGridBottom="106", scaleGridLeft="6", scaleGridRight="7");
+            thumb-down-skin: Embed("assets/images/scrollbar/scrollbar_thumb_up.png",scaleGridTop="8", scaleGridBottom="106", scaleGridLeft="6", scaleGridRight="7");
+            thumb-over-skin: Embed("assets/images/scrollbar/scrollbar_thumb_up.png",scaleGridTop="8", scaleGridBottom="106", scaleGridLeft="6", scaleGridRight="7");
         }
         
-        Button{
-            fill-alphas: 1.0, 1.0;
-            button-width: 70;
-        }
+   ToggleButtonBar {
+   buttonStyleName: "mytoggleButtonBarButtonStyle";
+   firstButtonStyleName: "mytoggleButtonBarFirstButtonStyle";
+   lastButtonStyleName: "mytoggleButtonBarLastButtonStyle";
+   selectedButtonTextStyleName: "mytoggleButtonBarSelectedButtonStyle";
+}
+
+.mytoggleButtonBarButtonStyle {
+   themeColor: #000000;
+}
+
+.mytoggleButtonBarFirstButtonStyle {
+}
+
+.mytoggleButtonBarLastButtonStyle {
+}
+
+.mytoggleButtonBarSelectedButtonStyle {
+}
+        
+Button {
+   themeColor: #000000;
+}
+
+ToolTip {
+   backgroundAlpha: 0.60;
+   backgroundColor: #000000;
+}
+        
+        ButtonBar {
+   buttonWidth: 80;
+   horizontalGap: 0;
+   textIndent: 0;
+   letterSpacing: 0;
+   buttonStyleName: "mybuttonBarButtonStyle";
+   firstButtonStyleName: "mybuttonBarFirstButtonStyle";
+   lastButtonStyleName: "mybuttonBarLastButtonStyle";
+}
+
+.mybuttonBarButtonStyle {
+   highlightAlphas: 0, 0.6;
+   fillAlphas: 0.8, 0.8, 0.8, 0.8;
+   borderColor: #999999;
+   themeColor: #666666;
+}
+
+.mybuttonBarFirstButtonStyle {
+   cornerRadius: 6;
+}
+
+.mybuttonBarLastButtonStyle {
+   cornerRadius: 6;
+}
         
         TabBar{
             fill-alphas: 1.0, 1.0;
@@ -74,8 +99,8 @@ Application{
         
         Canvas {
             border-style: solid;
-            corner-radius: 5;
-            background-color: #f9f7f7;
+            corner-radius: 3;
+            background-alpha:0.2;
         }
         
         Label {
@@ -96,4 +121,11 @@ Application{
         MenuBar{
             font-family:Verdana;
             font-size:12;
+        }
+        
+          .ThumbnailCanvas {
+            border-style: solid;
+            corner-radius: 3;
+            background-alpha:0.8;
+            background-color:#FFFFFF;
         }
