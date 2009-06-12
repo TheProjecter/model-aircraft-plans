@@ -51,11 +51,13 @@ package net.moocowstudio.modelaircraft.database.sqlite {
             if (_parameters) {
                 for (var i : uint = 0; i < _parameters.length; i++) {
                     _statement.parameters[i] = _parameters[i];
+                    trace(_parameters[i]);
                 }
             }
             _statement.addEventListener(SQLEvent.RESULT, onQueryResult);
             _statement.addEventListener(SQLErrorEvent.ERROR, onQueryError);
             _statement.execute();
+            trace(_sql);
         }
 
         private function onQueryResult(evt : SQLEvent) : void {

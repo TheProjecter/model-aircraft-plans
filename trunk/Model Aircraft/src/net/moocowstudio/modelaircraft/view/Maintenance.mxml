@@ -9,30 +9,39 @@
     <mx:ViewStack id="viewStack"
                   width="100%"
                   height="100%"
-                  y="31"
-                  borderStyle="solid">
-        <view:AddAircraft id="viewAddAircraft"
-                          label="New Aircraft"
+                  y="40"
+                  borderStyle="none"
+                  x="10"
+                  selectedIndex="1">
+
+        <view:AddDesigner id="viewAddDesigner"
+                          label="New Designer"
                           height="100%"
                           width="100%"
-                          save="onAddAircraft()" />
-        <view:AddDesigner label="New Designer"
-                          height="100%"
-                          width="100%" />
-        <view:AddPublication label="New Publication"
-                             height="1005"
-                             width="100%">
+                          save="onAddDesigner()" />
+        <view:AddPublication id="viewAddPublication"
+                             label="New Publication"
+                             height="100%"
+                             width="100%"
+                             save="onAddPublication()"
+                             borderStyle="none">
 
         </view:AddPublication>
         <view:AddType label="New Type"
                       height="100%"
-                      width="100%">
+                      width="100%"
+                      save="onAddAircraftType()"
+                      id="viewAddAircraftType">
 
         </view:AddType>
-
+        <view:AddAircraft id="viewAddAircraft"
+                          label="New Aircraft"
+                          height="100%"
+                          width="100%"
+                          save="onAddAircraft()"
+                          borderStyle="none" />
     </mx:ViewStack>
-    <mx:ToggleButtonBar x="63.5"
-                        y="10"
+    <mx:ToggleButtonBar y="17"
                         dataProvider="viewStack"
                         horizontalCenter="0"
                         itemClick="onItemClick_viewStack(event)">
@@ -40,10 +49,30 @@
 
     <sql:SQLite id="aircraft_db"
                 file="aircraft.db" />
+    <!-- Adding new items -->
     <sql:Query id="queryAddAircraft"
                connection="{aircraft_db.connection}"
-               sql="INSERT INTO aircraft VALUES (@ID, @NAME, @PUBLICATION_ID, @DESIGNER_ID, @AIRCRAFT_TYPE_ID, @YEAR, @WINGSPAN, @IMAGE)"
+               sql="INSERT INTO aircraft VALUES (@PLAN_NUMBER, @PLAN_KEY_ID, @COMMENT, @ID, @NAME, @PUBLICATION_ID, @DESIGNER_ID, @AIRCRAFT_TYPE_ID, @YEAR, @WINGSPAN, @IMAGE)"
                result="clearFormFields(); /*listContacts_query.execute()*/" />
+    <sql:Query id="queryAddAircraftType"
+               connection="{aircraft_db.connection}"
+               sql="INSERT INTO aircraft_type VALUES (:ID, :NAME)"
+               result="clearFormFields();" />
+    <sql:Query id="queryAddPublication"
+               connection="{aircraft_db.connection}"
+               sql="INSERT INTO publication VALUES (:ID, :NAME)"
+               result="clearFormFields();" />
+    <sql:Query id="queryAddDesigner"
+               connection="{aircraft_db.connection}"
+               sql="INSERT INTO designer VALUES (:ID, :FIRST_NAME, :LAST_NAME)"
+               result="clearFormFields();" />
 
+    <mx:Image id="imageDatabase"
+              source="assets/images/database.png"
+              bottom="20"
+              left="20"
+              alpha="0.4"
+              height="64"
+              width="64" />
 
 </MaintenanceClass>

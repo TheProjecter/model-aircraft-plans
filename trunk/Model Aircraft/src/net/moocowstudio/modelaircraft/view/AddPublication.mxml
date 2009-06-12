@@ -2,16 +2,37 @@
 <AddPublicationClass xmlns="net.moocowstudio.modelaircraft.view.codebehind.*"
                      xmlns:mx="http://www.adobe.com/2006/mxml"
                      width="525"
-                     height="300">
-    <mx:Form x="10"
-             y="10"
-             width="330"
-             horizontalCenter="0">
-        <mx:FormHeading label="Add Publication" />
-        <mx:FormItem label="Publication Title">
-            <mx:TextInput id="txtTitle" />
-        </mx:FormItem>
+                     height="300"
+                     borderStyle="none">
+    <mx:Metadata>
+        [Event(name="save", type="flash.events.Event")]
+    </mx:Metadata>
+    <mx:Canvas x="106"
+               y="24"
+               width="304"
+               height="105"
+               backgroundAlpha="0.4"
+               backgroundColor="#FFFFFF"
+               borderStyle="solid"
+               horizontalCenter="0"
+               top="20">
+        <mx:Label x="10"
+                  y="10"
+                  text="Add a new model aircraft publication"
+                  fontSize="13"
+                  fontWeight="bold"
+                  horizontalCenter="0" />
+        <mx:Label x="10"
+                  y="40"
+                  text="Title:"
+                  fontSize="13" />
+        <mx:TextInput id="txtTitle"
+                      x="59"
+                      y="40"
+                      width="233" />
         <mx:Button label="+"
-                   click="onClick_btnAdd(event)" />
-    </mx:Form>
+                   click="onClick_btnAdd(event)"
+                   x="252"
+                   y="70" />
+    </mx:Canvas>
 </AddPublicationClass>

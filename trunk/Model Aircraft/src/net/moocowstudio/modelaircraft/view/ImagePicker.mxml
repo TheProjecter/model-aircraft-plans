@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml"
-           width="150"
-           height="158"
-           creationComplete=""
+           width="82"
+           height="24"
+           creationComplete="init()"
            borderColor="#333333"
            cornerRadius="8"
-           borderStyle="solid">
+           borderStyle="none">
     <mx:Metadata>
 		[DefaultProperty("componentChildren")]
 		[Event(name="select", type="flash.events.Event")]
@@ -17,7 +17,7 @@
 
             private var _selectLabel : String = "Select";
             private var _children : Array = [];
-            [Bindable] private var _selectedItem : Image = new Image();
+            [Bindable] public var _selectedItem : Image = new Image();
             public var imageAsByteArray : ByteArray;
 
             [Bindable] public function set selectLabel(text : String) : void {
@@ -72,6 +72,24 @@
                 // statement.execute(-1, responder);
                 this._selectedItem.source = byteArray;
             }
+
+            public function convertImageToByteArray() : void {
+                var image : Bitmap = Bitmap(this.selectedItem);
+                var encoder : PNGEncoder = new PNGEncoder();
+// The PNGEncoder allows you to convert BitmapData object into a ByteArray, ready for storage in an SQLite blob field
+                var byteArray : ByteArray = encoder.encode(image.bitmapData);
+                this.imageAsByteArray = byteArray;
+                //var statement:SQLStatement = SQLConnectionWrapper.instance.setPicture(1, byteArray);
+                // statement.execute(-1, responder);
+                this._selectedItem.source = byteArray;
+            }
+
+            public function init() : void {
+                var url : String = "assets/images/no_image.gif";
+                var loader : Loader = new Loader();
+                loader.contentLoaderInfo.addEventListener(Event.COMPLETE, handleLoadPicture);
+                loader.load(new URLRequest(url));
+            }
         ]]>
     </mx:Script>
     <mx:Canvas id="preview"
@@ -80,7 +98,9 @@
                right="10"
                bottom="40"
                backgroundColor="#ffffff"
-               dropShadowEnabled="true">
+               dropShadowEnabled="true"
+               includeInLayout="false"
+               visible="false">
         <mx:Image x="10"
                   y="10"
                   width="198"
@@ -91,9 +111,9 @@
                   right="10"
                   bottom="10" />
     </mx:Canvas>
-    <mx:Button x="10"
-               y="212"
-               label="Browse..."
+    <mx:Button label="Browse..."
                click="selectPicture()"
-               bottom="10" />
+               left="1"
+               top="1"
+               width="80" />
 </mx:Canvas>

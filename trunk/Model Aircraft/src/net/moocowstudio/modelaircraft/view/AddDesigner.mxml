@@ -3,21 +3,44 @@
                   xmlns:mx="http://www.adobe.com/2006/mxml"
                   height="300"
                   width="525"
-                  creationComplete="onCreationComplete(event)">
-    <mx:Form x="10"
-             y="10"
-             width="282"
-             horizontalCenter="0">
-        <mx:FormHeading label="New Designer" />
-        <mx:FormItem label="First Name">
-            <mx:TextInput id="txtFirstName" />
-        </mx:FormItem>
-        <mx:FormItem label="Last Name">
-            <mx:TextInput id="txtLastName" />
-        </mx:FormItem>
+                  creationComplete="onCreationComplete(event)"
+                  borderStyle="none">
+    <mx:Metadata>
+        [Event(name="save", type="flash.events.Event")]
+    </mx:Metadata>
+    <mx:Canvas x="119.5"
+               y="32"
+               width="284"
+               height="136"
+               horizontalCenter="0"
+               top="20"
+               backgroundColor="#FFFFFF"
+               backgroundAlpha="0.4"
+               borderStyle="solid">
+        <mx:Label x="10"
+                  y="10"
+                  text="Add a new model aircraft designer"
+                  fontSize="13"
+                  fontWeight="bold" />
+        <mx:TextInput id="txtFirstName"
+                      x="108"
+                      y="42" />
+        <mx:TextInput id="txtLastName"
+                      x="108"
+                      y="72" />
         <mx:Button label="+"
                    id="btnAdd"
-                   click="onClick_btnAdd(event)" />
-    </mx:Form>
+                   click="onClick_btnAdd(event)"
+                   x="228"
+                   y="102" />
+        <mx:Label x="10"
+                  y="42"
+                  text="First Name:"
+                  fontSize="13" />
+        <mx:Label x="10"
+                  y="72"
+                  text="Last Name:"
+                  fontSize="13" />
+    </mx:Canvas>
 
 </AddDesignerClass>
