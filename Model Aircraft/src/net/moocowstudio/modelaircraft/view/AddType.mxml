@@ -2,17 +2,36 @@
 <AddTypeClass xmlns="net.moocowstudio.modelaircraft.view.codebehind.*"
               xmlns:mx="http://www.adobe.com/2006/mxml"
               height="300"
-              width="525">
-    <mx:Form x="10"
-             y="10"
-             width="239"
-             horizontalCenter="0">
-        <mx:FormHeading label="Add Type" />
-        <mx:FormItem label="Title">
-            <mx:TextInput id="txtTitle" />
-        </mx:FormItem>
+              width="525"
+              borderStyle="none">
+    <mx:Metadata>
+        [Event(name="save", type="flash.events.Event")]
+    </mx:Metadata>
+    <mx:Canvas y="28"
+               width="248"
+               height="109"
+               horizontalCenter="0"
+               backgroundAlpha="0.4"
+               backgroundColor="#FFFFFF"
+               top="20">
+        <mx:Label x="14"
+                  y="10"
+                  text="Add new model aircraft type"
+                  fontSize="13"
+                  fontWeight="bold"
+                  horizontalCenter="0" />
+        <mx:TextInput id="txtTitle"
+                      x="55"
+                      y="45"
+                      width="181" />
         <mx:Button label="+"
-                   click="{this.onClick_btnAdd(event)}" />
-    </mx:Form>
+                   click="{this.onClick_btnAdd(event)}"
+                   x="196"
+                   y="75" />
+        <mx:Label x="10"
+                  y="45"
+                  text="Type:"
+                  fontSize="13" />
+    </mx:Canvas>
 
 </AddTypeClass>

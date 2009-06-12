@@ -15,8 +15,6 @@
             import mx.utils.Base64Encoder;
             import net.moocowstudio.modelaircraft.database.Helper;
             import mx.controls.Image;
-            import net.moocowstudio.modelaircraft.database.DatabaseFacade;
-            import net.moocowstudio.modelaircraft.database.Database;
             import mx.effects.Fade;
             import net.moocowstudio.modelaircraft.Aircraft;
             import net.moocowstudio.modelaircraft.view.AircraftCatalogItem;
@@ -29,9 +27,7 @@
             private var allMyThumbnails : Array = new Array();
             [Bindable] private var allMyAircraft : Array = new Array();
 
-
             public function onCreationComplete(event : Event) : void {
-                this.queryListAircraft.execute();
             }
 
             public function init() : void {
@@ -238,35 +234,9 @@
                 this.layoutInGrid();
             }
 
-            public function onMouseClick_btnListView(event) : void {
-                dgItems.dataProvider = this.allMyAircraft;
-            }
-
-            public function onClick_btnInstallDatabase(event : Event) : void {
-                var database : Database = new Database();
-                database.createAircraftDatabase();
-            }
-
             public function onClick_btnSearch(event : Event) : void {
-                this.allMyAircraft = DatabaseFacade.getInstance().getAllAircraftWhereNameIsLike(txtSearch.text);
+                //this.allMyAircraft = DatabaseFacade.getInstance().getAllAircraftWhereNameIsLike(txtSearch.text);
 
-            }
-
-            public function onResult_listAircraft_query() : void {
-                var result : Array = this.queryListAircraft.data;
-                this.allMyAircraft = new Array();
-                for each (var object : Object in result) {
-                    var o : Aircraft = new Aircraft();
-                    o.name = object.name;
-                    o.id = object.aircraft_id;
-                    o.designerId = object.designer_id;
-                    o.publicationId = object.publication_id;
-                    o.typeId = object.aircraft_type_id;
-                    o.wingSpan = object.wingspan;
-                    o.year = object.year;
-                    o.image = Helper.base64ToByteArray(object.image);
-                    this.allMyAircraft.push(o);
-                }
             }
 
             public function setupDatabase() : void {
@@ -275,15 +245,16 @@
                 this.queryCreateAircraftTypeTable.execute();
                 this.queryCreateDesignerTable.execute();
                 this.queryCreatePublicationTable.execute();
-                this.queryCreateCounterTable.execute();
+            }
 
-            /* Initialize the counter table */ /*this.queryInitCounterTableForAircraftId.execute();
-               this.queryInitCounterTableForAircraftTypeId.execute();
-               this.queryInitCounterTableForDesignerId.execute();
-             this.queryInitCounterTableForPublicationId.execute();*/
-
-
-
+            public function onItemClick(event : Event) : void {
+                if (this.viewStack.selectedIndex == 1) {
+                    try {
+                        this.viewPlan.queryListAircraft.execute();
+                    } catch (e : *) {
+                        trace(e);
+                    }
+                }
             }
         ]]>
     </mx:Script>
@@ -292,150 +263,13 @@
               id="myImage"
               source="assets/images/Cloud Cruiser.jpg"
               visible="false" />
-    <mx:Canvas x="552"
-               y="139"
-               width="200"
-               height="200"
-               top="10"
-               bottom="10"
-               left="10"
-               right="10"
-               backgroundAlpha="0.2">
-        <mx:ApplicationControlBar x="10"
-                                  y="10"
-                                  width="100%"
-                                  height="41"
-                                  left="10"
-                                  right="10">
-            <mx:ToggleButtonBar dataProvider="viewStack">
-            </mx:ToggleButtonBar>
-            <mx:Spacer width="100%" />
-            <mx:TextInput id="txtSearch" />
-            <mx:Button icon="@Embed(source='assets/images/icon_magnifier.png')"
-                       width="20"
-                       id="btnSearch"
-                       click="onClick_btnSearch(event)" />
-        </mx:ApplicationControlBar>
-        <mx:ViewStack id="viewStack"
-                      bottom="10"
-                      left="10"
-                      right="10"
-                      top="60">
-            <mx:Canvas id="canvasThumbnails"
-                       label="Grid View"
-                       x="10"
-                       y="59"
-                       horizontalCenter="0"
-                       dropShadowEnabled="true"
-                       backgroundColor="#FFFFFF">
-            </mx:Canvas>
-
-            <mx:Canvas id="canvasListView"
-                       label="List View"
-                       x="10"
-                       y="59"
-                       horizontalCenter="0"
-                       dropShadowEnabled="true"
-                       backgroundColor="#FFFFFF">
-
-                <mx:DataGrid id="dgItems"
-                             right="10"
-                             left="10"
-                             top="10"
-                             bottom="311"
-                             dataProvider="{this.allMyAircraft}">
-                    <mx:columns>
-                        <mx:DataGridColumn headerText="Name"
-                                           dataField="name" />
-                        <mx:DataGridColumn headerText="Type"
-                                           dataField="type" />
-                        <mx:DataGridColumn headerText="Wing Span"
-                                           dataField="wingSpan" />
-                        <mx:DataGridColumn headerText="Year"
-                                           dataField="year" />
-                        <mx:DataGridColumn headerText="Designer"
-                                           dataField="designer" />
-                        <mx:DataGridColumn headerText="Publication"
-                                           dataField="publication" />
-                    </mx:columns>
-                </mx:DataGrid>
-                <mx:Canvas x="10"
-                           y="215"
-                           width="798"
-                           left="10"
-                           right="10"
-                           bottom="10">
-                    <mx:Image x="502"
-                              y="42"
-                              source="assets/images/Berkeley Brigadier.jpg"
-                              height="128"
-                              width="128" />
-                    <mx:Image x="502"
-                              y="141"
-                              height="128"
-                              width="128"
-                              source="assets/images/Cloud Cruiser.jpg" />
-                    <mx:Image x="658"
-                              y="42"
-                              height="128"
-                              width="128"
-                              source="assets/images/Tomboy 36.JPG" />
-                    <mx:Label x="177.5"
-                              y="10"
-                              text=""
-                              fontSize="15"
-                              horizontalCenter="0" />
-                    <mx:Label y="77"
-                              text="Year:"
-                              fontSize="13"
-                              x="71" />
-                    <mx:Label y="141"
-                              text="Publication:"
-                              fontSize="13"
-                              x="30" />
-                    <mx:Label y="42"
-                              text="Type:"
-                              fontSize="13"
-                              x="68" />
-                    <mx:Label y="42"
-                              text=""
-                              fontSize="13"
-                              width="355"
-                              x="120" />
-                    <mx:Label y="109"
-                              text=""
-                              fontSize="13"
-                              width="355"
-                              x="120" />
-                    <mx:Label y="77"
-                              text=""
-                              fontSize="13"
-                              width="355"
-                              x="120" />
-                    <mx:Label y="141"
-                              text=""
-                              fontSize="13"
-                              width="355"
-                              x="120" />
-                    <mx:Label y="109"
-                              text="Wing Span:"
-                              fontSize="13"
-                              x="31" />
-                </mx:Canvas>
-            </mx:Canvas>
-            <ns1:Maintenance label="Owner" />
-        </mx:ViewStack>
-    </mx:Canvas>
     <sql:SQLite id="aircraft_db"
                 file="aircraft.db"
                 open="setupDatabase()" />
-    <sql:Query id="queryListAircraft"
-               connection="{aircraft_db.connection}"
-               sql="SELECT * FROM aircraft"
-               result="onResult_listAircraft_query()" />
+
     <sql:Query id="queryCreateAircraftTable"
                connection="{aircraft_db.connection}"
-               sql="CREATE TABLE IF NOT EXISTS aircraft(aircraft_id integer not null,name text,publication_id int,designer_id int,aircraft_type_id int,year text,wingspan integer,image BLOB,primary key(aircraft_id));" />
+               sql="CREATE TABLE IF NOT EXISTS aircraft(plan_number text, plan_key numeric, comment text, aircraft_id integer not null,name text,publication_id int,designer_id int,aircraft_type_id int,year text,wingspan integer,image BLOB,primary key(aircraft_id));" />
     <sql:Query id="queryCreatePublicationTable"
                connection="{aircraft_db.connection}"
                sql="CREATE TABLE IF NOT EXISTS publication(publication_id integer not null,title text,primary key(publication_id));" />
@@ -445,21 +279,59 @@
     <sql:Query id="queryCreateDesignerTable"
                connection="{aircraft_db.connection}"
                sql="CREATE TABLE IF NOT EXISTS designer(designer_id integer not null,first_name text, last_name text,primary key(designer_id));" />
-    <sql:Query id="queryCreateCounterTable"
-               connection="{aircraft_db.connection}"
-               sql="CREATE TABLE IF NOT EXISTS counter(counter_id integer not null, count integer, primary key(counter_id));" />
+    <mx:ApplicationControlBar x="10"
+                              y="10"
+                              width="100%"
+                              height="41"
+                              left="10"
+                              right="10">
+        <mx:ToggleButtonBar dataProvider="viewStack"
+                            itemClick="onItemClick(event)">
+        </mx:ToggleButtonBar>
+        <mx:Spacer width="100%" />
+        <mx:TextInput id="txtSearch" />
+        <mx:Button icon="@Embed(source='assets/images/icon_magnifier.png')"
+                   width="20"
+                   id="btnSearch"
+                   click="onClick_btnSearch(event)" />
+    </mx:ApplicationControlBar>
+    <mx:ViewStack id="viewStack"
+                  bottom="10"
+                  left="10"
+                  right="10"
+                  top="60">
+        <mx:Canvas id="canvasThumbnails"
+                   label="Grid View"
+                   x="10"
+                   y="59"
+                   horizontalCenter="0"
+                   dropShadowEnabled="true"
+                   backgroundColor="#FFFFFF">
+        </mx:Canvas>
 
-    <!-- Set up the Counter Tables -->
-    <sql:Query id="queryInitCounterTableForAircraftId"
-               connection="{aircraft_db.connection}"
-               sql="INSERT INTO counter VALUES(1,1);" />
-    <sql:Query id="queryInitCounterTableForPublicationId"
-               connection="{aircraft_db.connection}"
-               sql="INSERT INTO counter VALUES(2,1);" />
-    <sql:Query id="queryInitCounterTableForAircraftTypeId"
-               connection="{aircraft_db.connection}"
-               sql="INSERT INTO counter VALUES(3,1);" />
-    <sql:Query id="queryInitCounterTableForDesignerId"
-               connection="{aircraft_db.connection}"
-               sql="INSERT INTO counter VALUES(4,1);" />
+        <mx:Canvas id="canvasListView"
+                   label="List View"
+                   x="10"
+                   y="59"
+                   horizontalCenter="0"
+                   dropShadowEnabled="true"
+                   backgroundColor="#FFFFFF">
+            <ns1:AircraftCatalogItem x="5"
+                                     y="10"
+                                     width="100%"
+                                     id="viewPlan"
+                                     height="100%">
+            </ns1:AircraftCatalogItem>
+
+        </mx:Canvas>
+        <mx:Canvas label="Manage"
+                   x="10"
+                   y="59"
+                   horizontalCenter="0"
+                   dropShadowEnabled="true"
+                   backgroundColor="#FFFFFF">
+            <ns1:Maintenance label="Owner"
+                             borderStyle="none" />
+        </mx:Canvas>
+    </mx:ViewStack>
 </mx:WindowedApplication>
