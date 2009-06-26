@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PublicationEntryViewBase xmlns="net.moocowstudio.modelaircraftplanlibrary.ux.views.codebehindviews.*"
+                          xmlns:mx="http://www.adobe.com/2006/mxml"
+                          width="326"
+                          height="144"
+                          layout="absolute"
+                          windowId="AddPublication"
+                          showResizeHandle="false"
+                          showMinimizeButton="true"
+                          showMaximizeButton="false"
+                          showCloseButton="true"
+                          title="Add Publication">
+    <mx:Label text="Publication Name:"
+              x="10"
+              y="10"
+              fontSize="13" />
+    <mx:TextInput y="10"
+                  width="150"
+                  id="txtPublicationName"
+                  right="15" />
+    <mx:CheckBox y="40"
+                 label="Close when done."
+                 right="15" />
+    <mx:ControlBar>
+        <mx:Button label="Reset"
+                   width="72"
+                   id="btnClear" />
+        <mx:Spacer width="100%" />
+        <mx:Button label="Cancel"
+                   width="72"
+                   id="btnCancel" />
+        <mx:Button label="Save"
+                   width="72"
+                   id="btnSave"
+                   click="onClick(event)" />
+    </mx:ControlBar>
+
+</PublicationEntryViewBase>

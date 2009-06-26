@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ModelAircraftPlanEntryViewBase xmlns="net.moocowstudio.modelaircraftplanlibrary.ux.views.codebehindviews.*"
+                                xmlns:mx="http://www.adobe.com/2006/mxml"
+                                width="400"
+                                height="448"
+                                layout="absolute"
+                                creationComplete="onCreationComplete(event)"
+                                windowId="PlanEntry"
+                                title="Add Plan"
+                                showMaximizeButton="false"
+                                showCloseButton="true"
+                                showMinimizeButton="true"
+                                showResizeHandle="false">
+    <mx:Script>
+        <![CDATA[
+            import net.moocowstudio.modelaircraftplanlibrary.modellocator.ModelLocator;
+        ]]>
+    </mx:Script>
+    <mx:Label text="Description:"
+              x="10"
+              y="10"
+              fontSize="13" />
+    <mx:Label text="Year:"
+              x="10"
+              y="70"
+              fontSize="13" />
+    <mx:Label text="Publication:"
+              x="10"
+              y="100"
+              fontSize="13" />
+    <mx:Label text="Designer:"
+              x="10"
+              y="130"
+              fontSize="13" />
+    <mx:Label text="Wingspan:"
+              x="10"
+              y="160"
+              fontSize="13" />
+    <mx:Label text="Comments:"
+              x="10"
+              y="190"
+              fontSize="13" />
+    <mx:Label text="Type:"
+              x="10"
+              y="40"
+              fontSize="13" />
+    <mx:ComboBox x="100"
+                 y="40"
+                 id="comboboxType"
+                 dataProvider="{ModelLocator.getInstance().dpPlanTypes}"
+                 labelFunction="labelFunction_planTypes"
+                 width="160">
+
+    </mx:ComboBox>
+    <mx:ComboBox x="100"
+                 y="100"
+                 id="comboboxPublication"
+                 dataProvider="{ModelLocator.getInstance().dpPublications}"
+                 labelFunction="labelFunction_publications"
+                 width="160">
+    </mx:ComboBox>
+    <mx:ComboBox x="100"
+                 y="130"
+                 id="comboboxDesigner"
+                 dataProvider="{ModelLocator.getInstance().dpDesigners}"
+                 labelFunction="labelFunction_designers"
+                 width="160">
+    </mx:ComboBox>
+    <mx:TextInput x="100"
+                  y="71"
+                  width="80"
+                  id="txtYear" />
+    <mx:TextInput x="100"
+                  y="11"
+                  width="160"
+                  id="txtDescription" />
+    <mx:TextInput x="100"
+                  y="161"
+                  width="80"
+                  id="txtWingspan" />
+    <mx:TextArea x="100"
+                 y="192"
+                 height="142"
+                 width="270"
+                 id="txtComments" />
+    <mx:LinkButton x="341"
+                   y="42"
+                   label="+"
+                   right="5" />
+    <mx:LinkButton x="341"
+                   y="102"
+                   label="+"
+                   right="5" />
+    <mx:LinkButton x="341"
+                   y="132"
+                   label="+"
+                   right="5" />
+    <mx:CheckBox x="246"
+                 y="345"
+                 label="Close when done." />
+    <mx:ControlBar>
+        <mx:Button label="Reset"
+                   width="72"
+                   id="btnClear" />
+        <mx:Spacer width="100%" />
+        <mx:Button label="Cancel"
+                   width="72"
+                   id="btnCancel" />
+        <mx:Button label="Save"
+                   width="72"
+                   id="btnSave"
+                   click="onClick(event)" />
+    </mx:ControlBar>
+</ModelAircraftPlanEntryViewBase>

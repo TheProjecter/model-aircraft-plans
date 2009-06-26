@@ -1,0 +1,15 @@
+<mx:ComboBox xmlns:mx="http://www.adobe.com/2006/mxml"
+             editable="true"
+             dataProvider="{ModelLocator.getInstance().dpDesigners}"
+             labelFunction="labelFunction_designers">
+    <mx:Script>
+        <![CDATA[
+            import net.moocowstudio.modelaircraftplanlibrary.modellocator.ModelLocator;
+            public function labelFunction_designers(item : Object) : String {
+                var text : String = item.designer_first_name + " " + item.designer_last_name;
+                return text;
+        }
+        ]]>
+    </mx:Script>
+
+</mx:ComboBox>

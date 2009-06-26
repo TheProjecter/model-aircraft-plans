@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ModelAircraftPlansViewBase xmlns="net.moocowstudio.modelaircraftplanlibrary.ux.views.codebehindviews.*"
+                            xmlns:mx="http://www.adobe.com/2006/mxml"
+                            width="600"
+                            height="540"
+                            windowId="PlanEditor"
+                            layout="absolute">
+    <mx:Script>
+        <![CDATA[
+            import net.moocowstudio.modelaircraftplanlibrary.modellocator.ModelLocator;
+            public var model : ModelLocator = ModelLocator.getInstance();
+        ]]>
+    </mx:Script>
+    <mx:Canvas left="10"
+               right="10"
+               bottom="10"
+               top="10">
+        <mx:DataGrid width="538"
+                     height="350"
+                     dataProvider="{ModelLocator.getInstance().dpPlans}"
+                     editable="{this.checkBoxAllowInlineEditing.selected}"
+                     x="10"
+                     y="10">
+            <mx:columns>
+                <mx:DataGridColumn headerText="Name"
+                                   dataField="plan_name" />
+                <mx:DataGridColumn headerText="Type"
+                                   dataField="plan_type_description"
+                                   itemEditor="net.moocowstudio.modelaircraftplanlibrary.ux.customcomponents.comboboxPlanTypes">
+                </mx:DataGridColumn>
+                <mx:DataGridColumn headerText="Designer"
+                                   labelFunction="labelFunction_designers"
+                                   itemEditor="net.moocowstudio.modelaircraftplanlibrary.ux.customcomponents.comboboxDesigners" />
+                <mx:DataGridColumn headerText="Publication"
+                                   dataField="publication_name"
+                                   itemEditor="net.moocowstudio.modelaircraftplanlibrary.ux.customcomponents.comboboxPublications" />
+                <mx:DataGridColumn headerText="Year"
+                                   dataField="plan_year" />
+                <mx:DataGridColumn headerText="Wingspan"
+                                   dataField="plan_wingspan" />
+                <mx:DataGridColumn headerText="Comments"
+                                   dataField="plan_comments" />
+            </mx:columns>
+        </mx:DataGrid>
+        <mx:CheckBox x="420"
+                     y="368"
+                     label="Allow inline editing"
+                     selected="false"
+                     id="checkBoxAllowInlineEditing">
+            <mx:toolTip>Inline editing allows you to edit the plan details directly in the data grid display.</mx:toolTip>
+        </mx:CheckBox>
+        <mx:LinkButton x="10"
+                       y="386"
+                       label="Add Plan"
+                       id="linkbuttonAddPlan"
+                       click="onClick(event)" />
+        <mx:LinkButton x="10"
+                       y="409"
+                       label="Edit Selected Plan"
+                       id="linkbuttonEditPlan"
+                       click="onClick(event)" />
+        <mx:LinkButton x="10"
+                       y="432"
+                       label="Delete Selected Plans"
+                       id="linkbuttonDeletePlan"
+                       click="onClick(event)" />
+        <mx:Label x="10"
+                  y="367"
+                  text="Actions"
+                  fontSize="13" />
+    </mx:Canvas>
+
+</ModelAircraftPlansViewBase>

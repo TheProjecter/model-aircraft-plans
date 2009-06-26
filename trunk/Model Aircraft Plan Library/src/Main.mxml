@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml"
+                        xmlns:controller="net.moocowstudio.modelaircraftplanlibrary.controller.*"
+                        layout="absolute"
+                        xmlns:ns1="net.moocowstudio.modelaircraftplanlibrary.ux.views.*"
+                        creationComplete="onCreationComplete(event)"
+                        width="800"
+                        height="600"
+                        xmlns:ns2="net.moocowstudio.modelaircraftplanlibrary.ux.views.*">
+    <controller:Controller id="controller" />
+
+    <mx:Style source="/assets/css/classic.css" />
+    <!-- Create the view stack for our entry views -->
+
+    <mx:Script>
+        <![CDATA[
+            import net.moocowstudio.modelaircraftplanlibrary.ux.views.PlanTypeEntryView;
+            import net.moocowstudio.modelaircraftplanlibrary.ux.views.DesignerEntryView;
+            import net.moocowstudio.modelaircraftplanlibrary.ux.views.PublicationEntryView;
+            import net.moocowstudio.modelaircraftplanlibrary.controller.Constants;
+            import mx.events.MenuEvent;
+            import net.moocowstudio.modelaircraftplanlibrary.ux.views.ModelAircraftPlanEntryView;
+            import net.moocowstudio.windowmanagement.WindowManager;
+            import net.moocowstudio.modelaircraftplanlibrary.ux.views.ModelAircraftPlansView;
+            import net.moocowstudio.modelaircraftplanlibrary.events.PlanEvent;
+
+            [Bindable] private var dpMemu : XMLList = <><menuitem label="Library"><menuitem label="Open..."/><menuitem label="New..."/></menuitem><menuitem label="Plans"><menuitem id={Constants.MENU_BAR_ITEM_VIEW_ALL_PLANS} label="View All Plans..."/></menuitem><menuitem label="Add"><menuitem id={Constants.MENU_BAR_ITEM_ADD_PLAN} label="Add Plan..."/><menuitem id={Constants.MENU_BAR_ITEM_ADD_PLAN_TYPE} label="Add Plan Type..."/><menuitem id={Constants.MENU_BAR_ITEM_ADD_DESIGNER} label="Add Plan Designer..."/><menuitem id={Constants.MENU_BAR_ITEM_ADD_PUBLICATION} label="Add Plan Publication..."/></menuitem>
+                </>
+
+            public function onCreationComplete(event : Event) : void {
+                /*this.planTypeEntryView.addEventListener(PlanEvent.onSavePlanType, controller.onSave);
+                   this.publicationEntryView.addEventListener(PlanEvent.onSavePublication, controller.onSave);
+                   this.designerEntryView.addEventListener(PlanEvent.onSaveDesigner, controller.onSave);
+                   this.planEntryView.addEventListener(PlanEvent.onSavePlan, controller.onSave);
+                 */
+                new WindowManager(this);
+                WindowManager.getInstance().animate = true;
+                WindowManager.getInstance().setMargins(40, 40, 40, 40);
+
+            }
+
+
+            public function onMenuBarItemClick(event : MenuEvent) : void {
+                var id : int = event.item.@id;
+                switch (id) {
+                    case Constants.MENU_BAR_ITEM_VIEW_ALL_PLANS:
+                        var windowModelAircraftPlanEditorView : ModelAircraftPlansView = new ModelAircraftPlansView();
+                        WindowManager.getInstance().add(windowModelAircraftPlanEditorView);
+                        break;
+                    case Constants.MENU_BAR_ITEM_ADD_PLAN:
+                        var windowModelAircraftPlanEntryView : ModelAircraftPlanEntryView = new ModelAircraftPlanEntryView();
+                        WindowManager.getInstance().add(windowModelAircraftPlanEntryView);
+                        windowModelAircraftPlanEntryView.addEventListener(PlanEvent.onSavePlan, controller.onSave);
+                        break;
+                    case Constants.MENU_BAR_ITEM_ADD_DESIGNER:
+                        var windowDesignerEntryView : DesignerEntryView = new DesignerEntryView();
+                        WindowManager.getInstance().add(windowDesignerEntryView);
+                        windowDesignerEntryView.addEventListener(PlanEvent.onSaveDesigner, controller.onSave);
+                        break;
+                    case Constants.MENU_BAR_ITEM_ADD_PLAN_TYPE:
+                        var windowPlanTypeEntryView : PlanTypeEntryView = new PlanTypeEntryView();
+                        WindowManager.getInstance().add(windowPlanTypeEntryView);
+                        windowPlanTypeEntryView.addEventListener(PlanEvent.onSavePlanType, controller.onSave);
+                        break;
+                    case Constants.MENU_BAR_ITEM_ADD_PUBLICATION:
+                        var windowPublicationEntryView : PublicationEntryView = new PublicationEntryView();
+                        WindowManager.getInstance().add(windowPublicationEntryView);
+                        windowPublicationEntryView.addEventListener(PlanEvent.onSavePublication, controller.onSave);
+                        break;
+                }
+            }
+        ]]>
+    </mx:Script>
+
+    <mx:MenuBar x="0"
+                y="0"
+                width="100%"
+                dataProvider="{this.dpMemu}"
+                labelField="@label"
+                itemClick="onMenuBarItemClick(event)">
+    </mx:MenuBar>
+
+</mx:WindowedApplication>
