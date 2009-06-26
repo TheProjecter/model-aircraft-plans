@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DesignerEntryViewBase xmlns="net.moocowstudio.modelaircraftplanlibrary.ux.views.codebehindviews.*"
+                       xmlns:mx="http://www.adobe.com/2006/mxml"
+                       width="288"
+                       height="172"
+                       layout="absolute"
+                       windowId="AddDesigner"
+                       title="Add Designer"
+                       showCloseButton="true"
+                       showMaximizeButton="false"
+                       showMinimizeButton="true"
+                       showResizeHandle="false">
+    <mx:Label text="First Name:"
+              x="10"
+              y="10"
+              fontSize="13" />
+    <mx:Label text="Last Name:"
+              x="10"
+              y="40"
+              fontSize="13" />
+    <mx:TextInput y="11"
+                  width="159"
+                  id="txtFirstName"
+                  right="10" />
+    <mx:TextInput y="41"
+                  width="160"
+                  id="txtLastName"
+                  right="10" />
+    <mx:CheckBox x="121"
+                 y="71"
+                 label="Close when done."
+                 right="10" />
+    <mx:ControlBar>
+        <mx:Button label="Reset"
+                   width="72"
+                   id="btnClear" />
+        <mx:Spacer width="100%" />
+        <mx:Button label="Cancel"
+                   width="72"
+                   id="btnCancel" />
+        <mx:Button label="Save"
+                   width="72"
+                   id="btnSave"
+                   click="onClick(event)" />
+    </mx:ControlBar>
+
+</DesignerEntryViewBase>

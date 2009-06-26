@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PlanTypesViewBase xmlns="net.moocowstudio.modelaircraftplanlibrary.ux.views.codebehindviews.*"
+                        xmlns:mx="http://www.adobe.com/2006/mxml"
+                        width="400"
+                        height="300">
+    <mx:Script>
+        <![CDATA[
+            import net.moocowstudio.modelaircraftplanlibrary.modellocator.ModelLocator;
+        ]]>
+    </mx:Script>
+
+    <mx:DataGrid width="100%"
+                 height="100%"
+                 dataProvider="{ModelLocator.getInstance().dpPlanTypes}">
+        <mx:columns>
+            <mx:DataGridColumn headerText="Plan Type Id"
+                               dataField="plan_type_id" />
+            <mx:DataGridColumn headerText="Plan Type Description"
+                               dataField="plan__type_description" />
+        </mx:columns>
+    </mx:DataGrid>
+</PlanTypesViewBase>

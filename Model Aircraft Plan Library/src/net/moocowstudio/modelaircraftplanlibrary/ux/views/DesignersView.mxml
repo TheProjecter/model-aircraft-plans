@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DesignersViewBase xmlns="net.moocowstudio.modelaircraftplanlibrary.ux.views.codebehindviews.*"
+                        xmlns:mx="http://www.adobe.com/2006/mxml"
+                        width="400"
+                        height="300"
+                        windowId="ViewDesigners">
+    <mx:Script>
+        <![CDATA[
+            import net.moocowstudio.modelaircraftplanlibrary.modellocator.ModelLocator;
+        ]]>
+    </mx:Script>
+    <mx:DataGrid width="100%"
+                 height="100%"
+                 dataProvider="{ModelLocator.getInstance().dpDesigners}">
+        <mx:columns>
+            <mx:DataGridColumn headerText="Designer Id"
+                               dataField="designer_id" />
+            <mx:DataGridColumn headerText="Designer First Name"
+                               dataField="designer_first_name" />
+            <mx:DataGridColumn headerText="Designer Last Name"
+                               dataField="designer_last_name" />
+        </mx:columns>
+    </mx:DataGrid>
+
+</DesignersViewBase>
